@@ -11,3 +11,4 @@ seaborn==0.13.0
 imblearn
 feature-engine
 nbformat==5.9.0
+black[jupyter]
