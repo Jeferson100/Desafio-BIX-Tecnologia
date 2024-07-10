@@ -12,3 +12,4 @@ imblearn
 feature-engine
 nbformat==5.9.0
 black[jupyter]
+shap==0.43.0
