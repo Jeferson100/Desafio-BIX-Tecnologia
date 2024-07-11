@@ -13,3 +13,8 @@ feature-engine
 nbformat==5.9.0
 black[jupyter]
 shap==0.43.0
+keras==3.3.3
+tensorflow==2.16.1
+xgboost==2.0.3
+catboost==1.2.5
+scikit-optimize==0.10.0
