@@ -1,5 +1,5 @@
 # Desafio-BIX-Tecnologia
-Esse repositório faz parte de uma das etapas para a seleção da vaga na empresa Bix Tecnologia.
+Esse repositório faz parte de uma das etapas para a seleção da vaga na empresa Bix Tecnologia. As respostas para o desafio estão listadas nesse [README](respostas.md):
 
 # Descrição do Desafio em Ciência de Dados Aplicada à Otimização de Planejamento de Manutenção
 
