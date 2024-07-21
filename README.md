@@ -1,60 +1,85 @@
 # Desafio-BIX-Tecnologia
-Esse repositório faz parte de uma das etapas para a seleção da vaga na empresa Bix Tecnologia. As respostas para o desafio estão listadas nesse [README](respostas.md):
+Este repositório faz parte do processo seletivo para a vaga na empresa Bix Tecnologia. As respostas para o desafio estão detalhadas neste [README](respostas.md). Os dados estao na pasta "dados" e são dois arquivos CSV: [air_system_previous_years.csv](air_system_previous_years.csv) arquivo contendo todas as informações do setor de manutenção para os anos anteriores a 2022, com 178 colunas e [air_system_present_year.csv](air_system_present_year.csv) arquivo contendo todas as informações do setor de manutenção neste ano.
 
-# Descrição do Desafio em Ciência de Dados Aplicada à Otimização de Planejamento de Manutenção
+O repositório contém quatro notebooks, cada um abordando uma etapa específica do projeto:
 
-## Resumo
+1. [Análise Exploratória](analise_exploratoria_air_system.ipynb)
+2. [Tratamento de Dados](tratamento_dados_air_system.ipynb)
+3. [Treinamento de Modelos](treinamento_modelos.ipynb)
+4. [Avaliação de Modelos](avaliacao_modelos.ipynb)
 
-### Situação
+## Analise Exploratória
 
-Uma nova empresa de consultoria em ciência de dados foi contratada para resolver e melhorar o planejamento de manutenção de uma empresa terceirizada de transporte. A empresa mantém um número médio de caminhões em sua frota para entregas em todo o país, mas nos últimos 3 anos tem notado um grande aumento nas despesas relacionadas à manutenção do sistema de ar de seus veículos, mesmo mantendo o tamanho de sua frota relativamente constante. O custo de manutenção deste sistema específico é mostrado abaixo em dólares:
+No notebook [Análise Exploratória](analise_exploratoria_air_system.ipynb), importei e examinei os dados. Durante a análise, identifiquei:
 
-Seu objetivo como consultor é diminuir os custos de manutenção desse sistema em particular. Os custos de manutenção do sistema de ar podem variar dependendo da condição real do caminhão.
+- Muitos valores nulos e colunas com zeros.
+- Desbalanceamento de classes, com a classe negativa representando 98% dos dados e a classe positiva menos de 2%.
+- Padrões e anomalias nos dados.
+- Colunas redundantes ou irrelevantes.
+- Necessidade de tratamento dos valores ausentes e padronização das variáveis.
 
+Esta etapa inicial foi crucial para orientar as próximas etapas, garantindo a preparação adequada dos dados.
+
+## Tratamento de Dados
+
+No notebook [Tratamento de Dados](tratamento_dados_air_system.ipynb), realizei o seguinte:
+
+- Removi colunas com alta proporção de valores nulos e zeros (acima de 40%).
+- Imputei valores ausentes utilizando a mediana.
+- Utilizei o algoritmo `RandomOverSampler(sampling_strategy=1)` para lidar com o desbalanceamento de classes.
+- Normalizei os dados com `StandardScaler()`.
+- Reduzi a dimensionalidade utilizando `VarianceThreshold(threshold=0.3)`, `SmartCorrelatedSelection()` e `RFE()`, resultando em 20 colunas selecionadas.
+
+## Treinamento de Modelos
+
+No notebook [Treinamento de Modelos](treinamento_modelos.ipynb), selecionei e treinei os seguintes modelos:
+
+- **CatBoost**
+- **Random Forest**
+- **Redes Neurais Sequenciais**
+
+Para otimização dos modelos:
+
+- Utilizei `BayesSearchCV` para CatBoost e Random Forest.
+- Utilizei `keras_tuner.RandomSearch` para otimizar os hiperparâmetros das Redes Neurais Sequenciais.
+
+## Avaliação de Modelos
+
+No notebook [Avaliação de Modelos](avaliacao_modelos.ipynb), avaliei o desempenho dos modelos utilizando a métrica de recall:
+
+- **Redes Neurais Sequenciais**: Recall de 73%
+- **CatBoost**: Recall de 68%
+- **Random Forest**: Recall de 60%
+
+### Análise de Custo Monetário
+
+O desafio nos indicou os custos a seguir:
 - Se um caminhão for enviado para manutenção, mas não apresentar defeito nesse sistema, cerca de $10 serão cobrados pelo tempo gasto durante a inspeção pela equipe especializada.
 - Se um caminhão for enviado para manutenção e apresentar defeito nesse sistema, $25 serão cobrados para realizar o serviço de reparo preventivo.
 - Se um caminhão com defeito no sistema de ar não for enviado diretamente para manutenção, a empresa paga $500 para realizar a manutenção corretiva, considerando a mão de obra, substituição de peças e outros possíveis inconvenientes (por exemplo, o caminhão quebrar no meio do trajeto).
 
-Durante a reunião de alinhamento com os responsáveis pelo projeto e a equipe de TI da empresa, algumas informações foram fornecidas:
 
-- A equipe técnica informou que todas as informações sobre o sistema de ar dos caminhões estarão disponíveis, mas, por razões burocráticas relacionadas aos contratos da empresa, todas as colunas tiveram que ser codificadas.
-- A equipe técnica também informou que, devido à recente digitalização da empresa, algumas informações podem estar faltando no banco de dados enviado.
-- Finalmente, a equipe técnica informou que a fonte de informação vem do setor de manutenção da empresa, onde foi criada uma coluna no banco de dados chamada "class": "pos" seriam os caminhões que apresentaram defeitos no sistema de ar e "neg" seriam os caminhões que apresentaram defeitos em qualquer sistema que não fosse o de ar.
+Avaliei o desempenho dos modelos com base nos custos monetários de manutenção para diferentes thresholds:
 
-Os responsáveis pelo projeto estão muito empolgados com a iniciativa e, ao solicitar uma prova de conceito técnica, colocaram como principais requisitos:
-- Podemos reduzir nossos gastos com este tipo de manutenção usando técnicas de IA?
-- Você pode apresentar os principais fatores que indicam uma possível falha neste sistema?
-  
-Esses pontos, segundo eles, são importantes para convencer o conselho executivo a abraçar a causa e aplicá-la a outros sistemas de manutenção durante o ano de 2022.
+![Custo Threshold](imagens/custo_threshold.png)
 
-## Sobre o banco de dados
 
-Dois arquivos serão enviados para você:
-1. [air_system_previous_years.csv](air_system_previous_years.csv): Arquivo contendo todas as informações do setor de manutenção para os anos anteriores a 2022, com 178 colunas.
-2. [air_system_present_year.csv](air_system_present_year.csv): Arquivo contendo todas as informações do setor de manutenção neste ano.
-  
-Qualquer valor ausente no banco de dados é denotado por `na`.
+- **Random Forest**: Menor custo monetário de 21.805 unidades para um threshold de 5%.
+- **Redes Neurais Sequenciais**: Custo de 26.735 unidades para o mesmo threshold.
+- **CatBoost**: Custo de 46.010 unidades.
 
-Os resultados finais que serão apresentados ao conselho executivo precisam ser avaliados em relação ao `air_system_present_year.csv`.
+### Matriz de Confusão (Threshold de 5%)
 
-## Atividades do Desafio
+- **Random Forest**: Acertos de 357 de 373.
+- **Redes Neurais Sequenciais**: Acertos de 345 de 373.
+- **CatBoost**: Acertos de 298 de 373.
 
-Para resolver este problema, queremos que você responda às seguintes perguntas:
+## Análise de Calibração
 
-1. Quais passos você tomaria para resolver este problema? Descreva de forma completa e clara todos os passos que você considera essenciais para a resolução do problema.
-2. Qual métrica técnica de ciência de dados você utilizaria para resolver este desafio? Ex: erro absoluto, RMSE, etc.
-3. Qual métrica de negócio você utilizaria para resolver o desafio?
-4. Como as métricas técnicas se relacionam com as métricas de negócio?
-5. Que tipos de análises você gostaria de realizar no banco de dados do cliente?
-6. Quais técnicas você utilizaria para reduzir a dimensionalidade do problema?
-7. Quais técnicas você utilizaria para selecionar variáveis para seu modelo preditivo?
-8. Quais modelos preditivos você utilizaria ou testaria para este problema? Indique pelo menos 3.
-9. Como você avaliaria qual dos modelos treinados é o melhor?
-10. Como você explicaria o resultado do seu modelo? É possível saber quais variáveis são mais importantes?
-11. Como você avaliaria o impacto financeiro do modelo proposto?
-12. Quais técnicas você utilizaria para realizar a otimização de hiperparâmetros do modelo escolhido?
-13. Quais riscos ou precauções você apresentaria ao cliente antes de colocar este modelo em produção?
-14. Se seu modelo preditivo for aprovado, como você o colocaria em produção?
-15. Se o modelo estiver em produção, como você o monitoraria?
-16. Se o modelo estiver em produção, como você saberia quando re-treiná-lo?
+**Ao analisar o gráfico de calibração, observei que o modelo de Redes Neurais apresentou o melhor desempenho, mantendo uma consistência superior em todos os níveis.**
+
+![Plot de Calibração](imagens/calibracao_plot.png)
+
+
+
 
