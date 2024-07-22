@@ -1,5 +1,11 @@
 # Desafio-BIX-Tecnologia
-Este repositório faz parte do processo seletivo para a vaga na empresa Bix Tecnologia. As respostas para o desafio estão detalhadas neste [README](respostas.md). Os dados estao na pasta "dados" e são dois arquivos CSV: [air_system_previous_years.csv](air_system_previous_years.csv) arquivo contendo todas as informações do setor de manutenção para os anos anteriores a 2022, com 178 colunas e [air_system_present_year.csv](air_system_present_year.csv) arquivo contendo todas as informações do setor de manutenção neste ano.
+Este repositório faz parte do processo seletivo para a vaga na empresa Bix Tecnologia. O detalhes do desáfio estão em [descricao_desafio.md](descricao_desafio.md) e as respostas para o desafio estão detalhadas em [respostas.md](respostas.md). 
+
+Os dados estao na pasta [dados](dados) e são dois arquivos CSV:
+
+-[air_system_previous_years.csv](air_system_previous_years.csv) arquivo contendo todas as informações do setor de manutenção para os anos anteriores a 2022, com 178 colunas e 60000 linhas.
+
+-[air_system_present_year.csv](air_system_present_year.csv) arquivo contendo todas as informações do setor de manutenção neste ano contendo 178 colunas e 16000 linhas.
 
 O repositório contém quatro notebooks, cada um abordando uma etapa específica do projeto:
 
@@ -18,6 +24,10 @@ No notebook [Análise Exploratória](analise_exploratoria_air_system.ipynb), imp
 - Colunas redundantes ou irrelevantes.
 - Necessidade de tratamento dos valores ausentes e padronização das variáveis.
 
+Utilizando a biblioteca [Shapley Additive exPlanations(SHAP)](https://shap.readthedocs.io/en/latest/), identifiquei as variáveis mais importantes para o modelo com as variáveis `ck_000`, `bb_000`, `az_000` e `ee_005`sendo as mais importantes.
+
+![Analise Exploratória](imagens/shap_principais_variaveis.png)
+
 Esta etapa inicial foi crucial para orientar as próximas etapas, garantindo a preparação adequada dos dados.
 
 ## Tratamento de Dados
@@ -34,22 +44,22 @@ No notebook [Tratamento de Dados](tratamento_dados_air_system.ipynb), realizei o
 
 No notebook [Treinamento de Modelos](treinamento_modelos.ipynb), selecionei e treinei os seguintes modelos:
 
-- **CatBoost**
-- **Random Forest**
+- **Regressao Logisticas**
+- **Gradiente Boost**
 - **Redes Neurais Sequenciais**
 
 Para otimização dos modelos:
 
-- Utilizei `BayesSearchCV` para CatBoost e Random Forest.
+- Utilizei `BayesSearchCV` para Gradiente Boost e Regressao Logisticas.
 - Utilizei `keras_tuner.RandomSearch` para otimizar os hiperparâmetros das Redes Neurais Sequenciais.
 
 ## Avaliação de Modelos
 
 No notebook [Avaliação de Modelos](avaliacao_modelos.ipynb), avaliei o desempenho dos modelos utilizando a métrica de recall:
 
-- **Redes Neurais Sequenciais**: Recall de 73%
-- **CatBoost**: Recall de 68%
-- **Random Forest**: Recall de 60%
+- **Redes Neurais Sequenciais**: Recall de 58%
+- **Gradiente Boost**: Recall de 75%
+- **Regressão Logística**: Recall de 91%
 
 ### Análise de Custo Monetário
 
@@ -64,21 +74,25 @@ Avaliei o desempenho dos modelos com base nos custos monetários de manutenção
 ![Custo Threshold](imagens/custo_threshold.png)
 
 
-- **Random Forest**: Menor custo monetário de 21.805 unidades para um threshold de 5%.
-- **Redes Neurais Sequenciais**: Custo de 26.735 unidades para o mesmo threshold.
-- **CatBoost**: Custo de 46.010 unidades.
+- **Regressão Logística**: Menor custo monetário de 13.700  para um threshold de 21%.
+- **Redes Neurais Sequenciais**: Custo de 30.215 para o mesmo threshold.
+- **Gradiente Boost**: Custo de 18.810.
 
-### Matriz de Confusão (Threshold de 5%)
+### Matriz de Confusão (Threshold de 21%)
 
-- **Random Forest**: Acertos de 357 de 373.
-- **Redes Neurais Sequenciais**: Acertos de 345 de 373.
-- **CatBoost**: Acertos de 298 de 373.
+- **Regressão Logística**: Acertos de 180 de 187.
+- **Redes Neurais Sequenciais**: Acertos de 121 de 187.
+- **Gradiente Boost**: Acertos de 150 de 187.
 
 ## Análise de Calibração
 
-**Ao analisar o gráfico de calibração, observei que o modelo de Redes Neurais apresentou o melhor desempenho, mantendo uma consistência superior em todos os níveis.**
+**Ao analisar o gráfico de calibração, observei que nenhum modelo conseguiu ter um bom nivel de calibração. Para tentar corigir esses modelos, utilizei o metodo de Calibração VennABERS. Um preditor Venn-ABERS produz duas previsões de probabilidade para cada objeto de teste. Em poucas palavras, o preditor Venn-ABERS pode ser visto como uma função de calibração livre de distribuição que mapeia as pontuações produzidas por um classificador de pontuação para probabilidades bem calibradas.  Após utilizar o metodo de Calibração VennABERS nenhum modelo conseguiu ter um bom nivel de calibração também.**
 
-![Plot de Calibração](imagens/calibracao_plot.png)
+![Plot de Calibração Ven](imagens/calibracao_plot_ven.png)
+
+
+
+
 
 
 
