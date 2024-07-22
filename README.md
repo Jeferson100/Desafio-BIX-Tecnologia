@@ -3,9 +3,9 @@ Este repositório faz parte do processo seletivo para a vaga na empresa Bix Tecn
 
 Os dados estao na pasta [dados](dados) e são dois arquivos CSV:
 
--[air_system_previous_years.csv](air_system_previous_years.csv) arquivo contendo todas as informações do setor de manutenção para os anos anteriores a 2022, com 178 colunas e 60000 linhas.
+- [air_system_previous_years.csv](air_system_previous_years.csv) arquivo contendo todas as informações do setor de manutenção para os anos anteriores a 2022, com 178 colunas e 60000 linhas.
 
--[air_system_present_year.csv](air_system_present_year.csv) arquivo contendo todas as informações do setor de manutenção neste ano contendo 178 colunas e 16000 linhas.
+- [air_system_present_year.csv](air_system_present_year.csv) arquivo contendo todas as informações do setor de manutenção neste ano contendo 178 colunas e 16000 linhas.
 
 O repositório contém quatro notebooks, cada um abordando uma etapa específica do projeto:
 
