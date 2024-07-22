@@ -1,4 +1,5 @@
-# Desafio-BIX-Tecnologia
+# Desafio-BIX-Tecnologia - Nesse branch fiz desbalanceamento de dados de treinamento igualando as classes positivas e falsa.
+
 Este repositório faz parte do processo seletivo para a vaga na empresa Bix Tecnologia. O detalhes do desáfio estão em [descricao_desafio.md](descricao_desafio.md) e as respostas para o desafio estão detalhadas em [respostas.md](respostas.md). 
 
 Os dados estao na pasta [dados](dados) e são dois arquivos CSV:
