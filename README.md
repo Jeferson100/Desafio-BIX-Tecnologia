@@ -1,5 +1,5 @@
 # Desafio-BIX-Tecnologia
-Este repositório faz parte do processo seletivo para a vaga na empresa Bix Tecnologia. As respostas para o desafio estão detalhadas neste [README](respostas.md). Os dados estao na pasta "dados" e são dois arquivos CSV: [air_system_previous_years.csv](air_system_previous_years.csv) arquivo contendo todas as informações do setor de manutenção para os anos anteriores a 2022, com 178 colunas e [air_system_present_year.csv](air_system_present_year.csv) arquivo contendo todas as informações do setor de manutenção neste ano.
+Este repositório faz parte do processo seletivo para a vaga na empresa Bix Tecnologia. Os detales para o desafio estão neste [README](descricao_desafio.md). Os dados estao na pasta "dados" e são dois arquivos CSV: [air_system_previous_years.csv](air_system_previous_years.csv) arquivo contendo todas as informações do setor de manutenção para os anos anteriores a 2022, com 178 colunas e [air_system_present_year.csv](air_system_present_year.csv) arquivo contendo todas as informações do setor de manutenção neste ano.
 
 O repositório contém quatro notebooks, cada um abordando uma etapa específica do projeto:
 
@@ -18,6 +18,10 @@ No notebook [Análise Exploratória](analise_exploratoria_air_system.ipynb), imp
 - Colunas redundantes ou irrelevantes.
 - Necessidade de tratamento dos valores ausentes e padronização das variáveis.
 
+Utilizando a biblioteca [Shapley Additive exPlanations(SHAP)](https://shap.readthedocs.io/en/latest/), identifiquei as variáveis mais importantes para o modelo com as variáveis `ck_000`, `bb_000`, `az_000` e `ee_005`sendo as mais importantes.
+
+![Analise Exploratória](imagens/shap_principais_variaveis.png)
+
 Esta etapa inicial foi crucial para orientar as próximas etapas, garantindo a preparação adequada dos dados.
 
 ## Tratamento de Dados
@@ -26,7 +30,6 @@ No notebook [Tratamento de Dados](tratamento_dados_air_system.ipynb), realizei o
 
 - Removi colunas com alta proporção de valores nulos e zeros (acima de 40%).
 - Imputei valores ausentes utilizando a mediana.
-- Utilizei o algoritmo `RandomOverSampler(sampling_strategy=1)` para lidar com o desbalanceamento de classes.
 - Normalizei os dados com `StandardScaler()`.
 - Reduzi a dimensionalidade utilizando `VarianceThreshold(threshold=0.3)`, `SmartCorrelatedSelection()` e `RFE()`, resultando em 20 colunas selecionadas.
 
@@ -51,6 +54,13 @@ No notebook [Avaliação de Modelos](avaliacao_modelos.ipynb), avaliei o desempe
 - **CatBoost**: Recall de 68%
 - **Random Forest**: Recall de 60%
 
+As matrizes de confusão foram as seguintes:
+![Matriz de Confusão Redes Neurais](imagens/matriz_confusao_Redes_Neurais.png)
+
+![Matriz de Confusão CatBoost](imagens/matriz_confusao_Cat_Boost.png)
+
+![Matriz de Confusão Random Forest](imagens/matriz_confusao_Random_Forest.png)
+
 ### Análise de Custo Monetário
 
 O desafio nos indicou os custos a seguir:
@@ -74,11 +84,17 @@ Avaliei o desempenho dos modelos com base nos custos monetários de manutenção
 - **Redes Neurais Sequenciais**: Acertos de 345 de 373.
 - **CatBoost**: Acertos de 298 de 373.
 
+![Matriz de Confusão Threshold random forest](imagens/matriz_confusao_menor_custo_Random_Forest.png)
+
+![Matriz de Confusão Threshold redes neurais](imagens/matriz_confusao_menor_custo_Redes_Neurais.png)
+
+![Matriz de Confusão Threshold CatBoost](imagens/matriz_confusao_menor_custo_Cat_Boost.png)
+
 ## Análise de Calibração
 
-**Ao analisar o gráfico de calibração, observei que o modelo de Redes Neurais apresentou o melhor desempenho, mantendo uma consistência superior em todos os níveis.**
+**Ao analisar o gráfico de calibração, observei que o modelo de Redes Neurais apresentou o melhor desempenho, mantendo uma consistência superior em todos os níveis. Para tentar melhorar esses modelos, utilizei o metodo de Calibração VennABERS. Um preditor Venn-ABERS produz duas previsões de probabilidade para cada objeto de teste. Em poucas palavras, o preditor Venn-ABERS pode ser visto como uma função de calibração livre de distribuição que mapeia as pontuações produzidas por um classificador de pontuação para probabilidades bem calibradas. Após utilizar o metodo de Calibração VennABERS a Redes Neurais continuava tendo o melhor desempenho.**
 
-![Plot de Calibração](imagens/calibracao_plot.png)
+![Plot de Calibração](imagens/calibracao_plot_ven.png)
 
 
 
