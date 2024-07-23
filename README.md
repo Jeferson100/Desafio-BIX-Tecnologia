@@ -74,9 +74,9 @@ Avaliei o desempenho dos modelos com base nos custos monetários de manutenção
 ![Custo Threshold](imagens/custo_threshold.png)
 
 
-- **Random Forest**: Menor custo monetário de 21.805 unidades para um threshold de 5%.
-- **Redes Neurais Sequenciais**: Custo de 26.735 unidades para o mesmo threshold.
-- **CatBoost**: Custo de 46.010 unidades.
+- **Random Forest**: Menor custo monetário de 21.805 valores monetarios para um threshold de 5%.
+- **Redes Neurais Sequenciais**: Custo de 26.735 valores monetarios para o mesmo threshold.
+- **CatBoost**: Custo de 46.010 valores monetarios.
 
 ### Matriz de Confusão (Threshold de 5%)
 
