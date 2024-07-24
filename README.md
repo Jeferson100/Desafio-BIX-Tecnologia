@@ -51,16 +51,24 @@ No notebook [Treinamento de Modelos](treinamento_modelos.ipynb), selecionei e tr
 
 Para otimização dos modelos:
 
-- Utilizei `BayesSearchCV` para Gradiente Boost e Regressao Logisticas.
+- Utilizei `RandomizedSearchCV` para Gradiente Boost e Regressao Logisticas.
 - Utilizei `keras_tuner.RandomSearch` para otimizar os hiperparâmetros das Redes Neurais Sequenciais.
 
 ## Avaliação de Modelos
 
 No notebook [Avaliação de Modelos](avaliacao_modelos.ipynb), avaliei o desempenho dos modelos utilizando a métrica de recall:
 
-- **Redes Neurais Sequenciais**: Recall de 58%
-- **Gradiente Boost**: Recall de 75%
-- **Regressão Logística**: Recall de 91%
+- **Redes Neurais Sequenciais**: Recall de 68%
+- **Gradiente Boost**: Recall de 82%
+- **Regressão Logística**: Recall de 92%
+
+As matrizes de confusão foram as seguintes:
+
+![Matriz de Confusão Regressao Logística](imagens/matriz_confusao_Regressao_Log.png)
+
+![Matriz de Redes Neurais](imagens/matriz_confusao_Redes_Neurais.png)
+
+![Matriz de Confusão Gradiente Boost](imagens/matriz_confusao_Grad_Boost.png)
 
 ### Análise de Custo Monetário
 
@@ -75,15 +83,21 @@ Avaliei o desempenho dos modelos com base nos custos monetários de manutenção
 ![Custo Threshold](imagens/custo_threshold.png)
 
 
-- **Regressão Logística**: Menor custo monetário de 13.700  para um threshold de 21%.
-- **Redes Neurais Sequenciais**: Custo de 30.215 para o mesmo threshold.
-- **Gradiente Boost**: Custo de 18.810.
+- **Regressão Logística**: Menor custo monetário de 24.765  para um threshold de 21%.
+- **Redes Neurais Sequenciais**: Custo de 51.215 para o threshold de 5%.
+- **Gradiente Boost**: Custo de 28.540 para o threshold de 5%.
 
 ### Matriz de Confusão (Threshold de 21%)
 
-- **Regressão Logística**: Acertos de 180 de 187.
-- **Redes Neurais Sequenciais**: Acertos de 121 de 187.
-- **Gradiente Boost**: Acertos de 150 de 187.
+- **Regressão Logística**: Acertos de 363 de 373.
+- **Redes Neurais Sequenciais**: Acertos de 273 de 373.
+- **Gradiente Boost**: Acertos de 327 de 373.
+
+![Matriz de Confusão Regressao Logística](imagens/matriz_confusao_menor_custo_Regressao_Log.png)
+
+![Matriz de Confusão Threshold redes neurais](imagens/matriz_confusao_menor_custo_Redes_Neurais.png)
+
+![Matriz de Confusão Threshold Gradiente Boost](imagens/matriz_confusao_menor_custo_Grad_Boost.png)
 
 ## Análise de Calibração
 
